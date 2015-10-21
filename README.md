@@ -46,10 +46,11 @@ To run the mailer during development, do the following:
 * `cd main; ./runMailer.sh`
 
 
-## Generating Start Scripts
+## Generating Production Build
 
 ```
 # initial setup
+cd distributionScripts
 brew install gnu-tar
 bundle install
 go get github.com/mitchellh/gox
