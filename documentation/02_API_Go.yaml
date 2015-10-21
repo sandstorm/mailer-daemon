@@ -1,0 +1,224 @@
+# REST API docu
+# see http://editor.swagger.io/
+#
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "0.1.0"
+  title: Mailing API
+
+host: localhost:3000
+basePath: /A_LONG_RANDOM_STRING
+paths:
+  /newsletter/{id}/send:
+    # This is a HTTP operation
+    post:
+      # Describe this verb here. Note: you can use markdown
+      description: |
+        Schedule a newsletter for sending. If it is already scheduled,
+        will not send anything.
+      # This is array of GET operation parameters:
+      consumes:
+        - application/json
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: id
+          in: path
+          description: ID of this newsletter
+          type: string
+          required: true
+        -
+          name: body
+          in: body
+          description: Metainformation to send a newsletter
+          required: true
+          schema:
+            title: newsletterMetainformation
+            properties:
+              RecipientsList:
+                type: "string"
+                description: "Path of a Recipients list file containing one recipient (JSON) per line"
+              Templates:
+                type: "object"
+                description: "HTML Contents of the newsletter; including placeholders."
+                properties:
+                  SubjectTemplate:
+                    type: "string"
+                    description: "Subject (including placeholders)"
+                  BodyTemplate:
+                    type: "string"
+                    description: "HTML Body of email (including placeholders)"
+                  ReceiverNameTemplate:
+                    type: "string"
+                    description: "Receiver Name (including placeholders)"
+                  ReceiverEmailTemplate:
+                    type: "string"
+                    description: "Receiver Email (including placeholders)"
+                  SenderNameTemplate:
+                    type: "string"
+                    description: "Sender Name (including placeholders)"
+                  SenderEmailTemplate:
+                    type: "string"
+                    description: "Sender Email (including placeholders)"
+                  ReplyToEmailTemplate:
+                    type: "string"
+                    description: "Sender Email (including placeholders)"
+                  LinkTemplates:
+                    type: "object"
+                    description: "map containing links contain recipient-specific data"
+                    properties:
+                      link1:
+                        type: "object"
+                        description: "link1 (name is arbitrary and is used as placeholder)"
+                        properties:
+                          EncryptionKey:
+                            type: "string"
+                            description: "secret key to generate the links HMAC"
+                          BaseLink:
+                            type: "string"
+                            description: "link without recipient specific parameters, e.g. http://.../unsubscribe?group=2 or http://.../view"
+                          Parameters:
+                            type: "array"
+                            description: "placeholders to include from the recipient, e.g. email or firstName"
+                            items:
+                              type: string
+                      link2:
+                        type: "object"
+                        description: "link2 (name is arbitrary and is used as placeholder)"
+                        properties:
+                          EncryptionKey:
+                            type: "string"
+                            description: "secret key to generate the links HMAC"
+                          BaseLink:
+                            type: "string"
+                            description: "link without recipient specific parameters, e.g. http://.../unsubscribe?group=2 or http://.../view"
+                          Parameters:
+                            type: "array"
+                            description: "placeholders to include from the recipient, e.g. email or firstName"
+                            items:
+                              type: string
+      # Expected responses for this operation:
+      responses:
+        # Response code
+        200:
+          description: Successful response
+        500:
+          description: Job already exists or templates are invalid
+
+  /newsletter/{id}/abortAndRemove:
+    delete:
+      description: |
+        Removes all data if the newsletter with the given ID from redis.
+        If the job is currently running pending sending tasks are completed and their status saved in redis.
+        In this case a second DELETE might be necessary in order to clean up.
+
+        If no newsletter with that ID exists the DELETE has no effect.
+      parameters:
+        -
+          name: id
+          in: path
+          description: ID of the newsletter to remove
+          type: string
+          required: true
+      responses:
+        200:
+          description: sucess
+        500:
+          description: internal server error
+
+  # This is a path endpoint. Change it.
+  /newsletter/status?jobIds={jobIds}:
+    # This is a HTTP operation
+    get:
+      parameters:
+        # An example parameter that is in query and is required
+        -
+          name: jobIds
+          in: path
+          description: comma-separated IDs of the newsletters of interest
+          type: string
+          required: true
+      responses:
+        # Response code
+        200:
+          description: |
+            {
+              "Jobs": {
+                "1": {
+                  "Status": "done",
+                  "Message": "",
+                  "NumberOfRecipients": 10,
+                  "NumberOfSentMails": 10,
+                  "NumberOfCurrentlySendingMails": 0
+                },
+                "2": {
+                  "Status": "prepared",
+                  "Message": "",
+                  "NumberOfRecipients": 100,
+                  "NumberOfSentMails": 50,
+                  "NumberOfCurrentlySendingMails": 6
+                }
+              },
+              "Summary": {
+                "Status": "summary",
+                "Message": "",
+                "NumberOfRecipients": 110,
+                "NumberOfSentMails": 60,
+                "NumberOfCurrentlySendingMails": 6
+              }
+            }
+
+  /newsletter/sendingFailures?targetFile={targetFile}&jobIds={jobIds}:
+    get:
+      parameters:
+        -
+          name: targetFile
+          in: path
+          description: path to the CSV file to create or overwrite
+          type: string
+          required: true
+        -
+          name: jobIds
+          in: path
+          description: comma-separated IDs of the newsletters of interest
+          type: string
+          required: true
+      responses:
+        200:
+          description: |
+            the CSV file is created under the given path containing all failed
+            recipients of all given newsletters
+        500:
+          description: an error occurred
+
+  /newsletter/serverConfiguration:
+    get:
+      responses:
+        200:
+          description: |
+            {
+                "RedisConfiguration": {
+                    "RedisUrl": "localhost:6379",
+                    "Verbosity": "high"
+                },
+                "AuthToken": "A_LONG_RANDOM_STRING",
+                "EmailGateway": "Mandrill"
+            }
+            
+            or
+            
+            {
+                "RedisConfiguration": {
+                    "RedisUrl": "localhost:6379",
+                    "Verbosity": ""
+                },
+                "AuthToken": "A_LONG_RANDOM_STRING",
+                "EmailGateway": "SMTP at 'localhost:1025'"
+            }
+        500:
+          description: an error occurred

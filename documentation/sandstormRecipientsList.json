@@ -1,0 +1,6 @@
+{"email": "christoph.daehne@sandstorm-media.de", "firstName": "Christoph", "lastName": "Dähne", "language": "de"}
+{"email": "christoph@sandstorm-media.de", "firstName": "Christoph", "lastName": "Dähne", "language": "de"}
+{"email": "no-such-address@sandstorm-media.de", "firstName": "xx", "lastName": "xx", "language": "de"}
+{"email": "", "firstName": "xx", "lastName": "xx", "language": "de"}
+{"email": { "hello": "world" }, "firstName": "xx", "lastName": "xx", "language": "de"}
+this is no valid JSON

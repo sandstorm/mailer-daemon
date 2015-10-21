@@ -1,0 +1,4 @@
+source 'https://rubygems.org'
+
+gem 'pleaserun',  '0.0.14'
+gem 'fpm',  '1.3.3'

@@ -1,0 +1,5 @@
+# hmac	encryptionKey	sample
+"2518ceebe3aa20ebadcae7a1f1dc30bb7696bd9d"	"my-super-secret-private-key"	"Hello World"
+"dc8c25af86d83a0287ac4a4bbb0c846f6317d894"	"my-super-secret-private-key"	""
+"a78da06ec23ce4ee5b211ce3e588faad360f001d"	"my-super-secret-private-key"	"{""email"": ""stefm@example.com"", ""firstName"": ""Stefan"", ""lastName"": ""Martin"", ""language"": ""en""}"
+"1c761036ddce575083f62cefc9535bf65a8b174d"	"my-super-secret-private-key"	"{""email"": ""foo@bar.de"", ""firstName"": ""Egon"", ""lastName"": ""Björk"", ""additional"": ""Test"", ""language"": ""de""}"
