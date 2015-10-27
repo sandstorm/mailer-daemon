@@ -1,11 +1,13 @@
 # Project Sandstorm Mailer -- Sending Daemon
 
+**The project has been sponsored by [Swisscom](https://www.swisscom.ch), and initiated by [Web Essentials](http://www.web-essentials.asia/). Thanks for your support!**
+
 This is a tool which adjusts Neos in a way such that it can be used to send Newsletters.
 
 Is is comprised of two parts:
 
-- a Go Daemon which does the actual Mail-Sending
-- a Neos package which provides the User Interface
+- a [Go Daemon](https://github.com/sandstorm/mailer-daemon) **this package** which does the actual Mail-Sending
+- a [Neos package](https://github.com/sandstorm/Sandstorm.Newsletter) which provides the User Interface
 
 This repository is containing the Go Daemon which does the mail-sending.
 
