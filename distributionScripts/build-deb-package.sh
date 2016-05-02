@@ -2,16 +2,14 @@
 
 set -e
 cd ../
-cd main
-gox -osarch='linux/386'
-cd ../
+$GOPATH/bin/gox -osarch='linux/386'
 rm -Rf bundle_work
 mkdir bundle_work
 cd bundle_work
 mkdir -p usr/local/bin
 mkdir -p var/log/sandstorm-newsletter-sender
 
-mv ../main/main_linux_386 usr/local/bin/sandstorm-newsletter-sender
+mv ../mailer-daemon_linux_386 usr/local/bin/sandstorm-newsletter-sender
 
 mkdir -p etc/init
 cp ../distributionScripts/_upstart_init_script.conf etc/init/sandstorm-newsletter-sender.conf
