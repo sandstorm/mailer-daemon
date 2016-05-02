@@ -28,35 +28,44 @@ This repository is containing the Go Daemon which does the mail-sending.
 
 ## Development Setup
 
-Note: Because we use a private GitHub repo, we need to run the following script instead of `go get github.com/sandstorm/mailer-daemon`:
+The following instructions have been tested using *Go 1.6*.
 
 ```
 # Ensure you have a working go installation and gopath is set:
 echo $GOPATH
-cd $GOPATH
-mkdir -p github.com/sandstorm/mailer-daemon
-cd github.com/sandstorm/mailer-daemon
-git clone git@github.com:sandstorm/mailer-daemon.git .
-```
 
-To run tests, execute `./runAllTests.sh`.
+# clone the mailer daemon and its dependencies
+go get github.com/sandstorm/mailer-daemon
+
+# Try to run the mailer. should start up, but display an error about AUTH_TOKEN not being set.
+$GOPATH/bin/mailer-daemon
+
+# To run the tests, do the following:
+cd $GOPATH/src/github.com/sandstorm/mailer-daemon/
+./runAllGoTests.sh
+```
 
 To run the mailer during development, do the following:
 
 * Ensure you have redis installed and on your path
 * We suggest to use MailHog (https://github.com/mailhog/MailHog/releases) to test the mail-sending
-* `cd main; ./runMailer.sh`
 
+* Then, use the `runMailer.sh` script:
+
+```
+cd $GOPATH/src/github.com/sandstorm/mailer-daemon/
+./runMailer.sh
+```
 
 ## Generating Production Build
 
 ```
 # initial setup
-cd distributionScripts
+cd $GOPATH/src/github.com/sandstorm/mailer-daemon/distributionScripts
 brew install gnu-tar
 bundle install
 go get github.com/mitchellh/gox
-gox -build-toolchain
+$GOPATH/bin/gox -build-toolchain
 
 
 # actual build:
