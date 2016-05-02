@@ -1,12 +1,12 @@
 package worker
 
 import (
-	"sandstormmedia/project-webessentials-mailer/go/mailer/recipientsRepository"
+	"github.com/sandstorm/mailer-daemon/recipientsRepository"
 	"bytes"
 	"html/template"
 	"fmt"
 	"strings"
-	"sandstormmedia/project-webessentials-mailer/go/mailer/hmacs"
+	"github.com/sandstorm/mailer-daemon/hmacs"
 )
 
 type RenderedTemplates struct {

@@ -4,10 +4,10 @@ import (
 	"os"
 	"log"
 	"time"
-	"sandstormmedia/project-webessentials-mailer/go/mailer/router"
-	"sandstormmedia/project-webessentials-mailer/go/mailer/recipientsRepository"
+	"github.com/sandstorm/mailer-daemon/router"
+	"github.com/sandstorm/mailer-daemon/recipientsRepository"
 	"github.com/garyburd/redigo/redis"
-	"sandstormmedia/project-webessentials-mailer/go/mailer/worker"
+	"github.com/sandstorm/mailer-daemon/worker"
 	"net/smtp"
 	"io"
 )

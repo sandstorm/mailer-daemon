@@ -5,7 +5,7 @@ import (
 	"strings"
 	"github.com/gocraft/web"
 	"encoding/json"
-	"sandstormmedia/project-webessentials-mailer/go/mailer/recipientsRepository"
+	"github.com/sandstorm/mailer-daemon/recipientsRepository"
 	"os"
 )
 

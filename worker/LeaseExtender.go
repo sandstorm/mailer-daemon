@@ -1,7 +1,7 @@
 package worker
 
 import (
-	"sandstormmedia/project-webessentials-mailer/go/mailer/recipientsRepository"
+	"github.com/sandstorm/mailer-daemon/recipientsRepository"
 	"time"
 	"log"
 )

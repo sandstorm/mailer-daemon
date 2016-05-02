@@ -3,7 +3,7 @@ package router
 import (
 	"github.com/gocraft/web"
 	"net/http"
-	"sandstormmedia/project-webessentials-mailer/go/mailer/recipientsRepository"
+	"github.com/sandstorm/mailer-daemon/recipientsRepository"
 )
 
 type Server struct {

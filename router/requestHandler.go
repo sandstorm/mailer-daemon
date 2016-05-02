@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"github.com/gocraft/web"
-	"sandstormmedia/project-webessentials-mailer/go/mailer/recipientsRepository"
+	"github.com/sandstorm/mailer-daemon/recipientsRepository"
 	"encoding/json"
 )
 
