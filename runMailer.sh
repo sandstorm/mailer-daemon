@@ -10,7 +10,5 @@ rm dump.rdb mailer.log > /dev/null 2>&1
 
 set -e
 go build
-redis-server --port 6379 & VERBOSITY=high AUTH_TOKEN=A_LONG_RANDOM_STRING SMTP_URL=localhost:1025 ./main
-#redis-server --port 6379 & VERBOSITY=high AUTH_TOKEN=A_LONG_RANDOM_STRING MANDRILL_API_KEY=123456 ./main
-
+redis-server --port 6379 & VERBOSITY=high AUTH_TOKEN=A_LONG_RANDOM_STRING SMTP_URL=localhost:1025 ./mailer-daemon
 
