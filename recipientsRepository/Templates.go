@@ -2,6 +2,7 @@ package recipientsRepository
 
 import (
 	"html/template"
+	"strings"
 )
 
 type Templates struct {
@@ -46,7 +47,11 @@ func (this *TemplatesString) Parse() (templates Templates, err error) {
 	templates.SubjectTemplate, err = template.New("SubjectTemplate").Parse(this.SubjectTemplate)
 	if err != nil { return }
 
-	templates.BodyTemplate, err = template.New("BodyTemplate").Parse(this.BodyTemplate)
+	templates.BodyTemplate, err = template.New("BodyTemplate").Funcs(template.FuncMap{
+		"mailerOpeningComment": func() template.HTML { return template.HTML("<!--") },
+		"mailerEndifComment": func() template.HTML { return template.HTML("<![endif]-->") },
+		"mailerClosingComment": func() template.HTML { return template.HTML("-->") },
+	}).Parse(replaceOpeningAndClosingCommentsWithFunctions(this.BodyTemplate))
 	if err != nil { return }
 
 	templates.ReceiverEmailTemplate, err = template.New("ReceiverEmailTemplate").Parse(this.ReceiverEmailTemplate)
@@ -67,4 +72,14 @@ func (this *TemplatesString) Parse() (templates Templates, err error) {
 	templates.LinkTemplates = this.LinkTemplates
 
 	return
+}
+
+func replaceOpeningAndClosingCommentsWithFunctions(template string) string {
+	template = strings.Replace(template, "<!--", "{{mailerOpeningComment}}", -1)
+ 
+ 	// NOTE: "endif" must be replaced BEFORE the closing HTML comment; as otherwise, the "<" of the endif directive will be replaced by &lt; ->
+ 	// breaking the output.
+ 	template = strings.Replace(template, "<![endif]-->", "{{mailerEndifComment}}", -1)
+ 	template = strings.Replace(template, "-->", "{{mailerClosingComment}}", -1)
+ 	return template
 }
