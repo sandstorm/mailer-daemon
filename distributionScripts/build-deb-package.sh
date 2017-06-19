@@ -15,4 +15,4 @@ mkdir -p etc/init
 cp ../distributionScripts/_upstart_init_script.conf etc/init/sandstorm-newsletter-sender.conf
 
 
-BUNDLE_GEMFILE=../distributionScripts/Gemfile bundle exec fpm -t deb -s dir -p ../ -n sandstorm-newsletter -a i386 --deb-user newslettersender --deb-group newslettersender --after-install ../distributionScripts/_deb_after_install.sh .
+BUNDLE_GEMFILE=../distributionScripts/Gemfile bundle exec fpm -t deb -s dir --version 1.1.0 -p ../ -n sandstorm-newsletter -a i386 --deb-user newslettersender --deb-group newslettersender --after-install ../distributionScripts/_deb_after_install.sh .
